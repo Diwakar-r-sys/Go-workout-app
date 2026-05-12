@@ -1,0 +1,44 @@
+name: go_workout_app
+description: AI-powered workout app with real-time push-up counting using ML Kit Pose Detection.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Camera
+  camera: ^0.10.5+9
+
+  # Google ML Kit Pose Detection (on-device AI)
+  google_mlkit_pose_detection: ^0.10.0
+
+  # State management
+  provider: ^6.1.2
+
+  # Animations
+  flutter_animate: ^4.5.0
+
+  # Confetti
+  confetti: ^0.7.0
+
+  # Audio beep
+  audioplayers: ^6.0.0
+
+  # Permissions
+  permission_handler: ^11.3.1
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/

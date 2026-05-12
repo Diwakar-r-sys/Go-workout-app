@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Flutter
+flutter_app/.dart_tool/
+flutter_app/.packages
+flutter_app/build/
+flutter_app/.flutter-plugins
+flutter_app/.flutter-plugins-dependencies
+flutter_app/android/.gradle/
+flutter_app/ios/Pods/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

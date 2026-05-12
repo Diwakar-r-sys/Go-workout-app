@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>GO Workout — AI Push-Up Counter</title>
+  <meta name="description" content="AI-powered workout app that counts your push-ups using your camera and body movement analysis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- MediaPipe Pose -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--                  HOME SCREEN                        -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div id="screen-home" class="screen active">
+    <div class="home-bg">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <div class="home-content">
+      <div class="home-header">
+        <img src="logo.png" alt="GO Workout Logo" class="app-logo-image" />
+        <h1 class="app-title">Workout<span class="accent">.</span></h1>
+        <p class="app-subtitle">AI-Powered Rep Counter</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-text">
+          <h3>Smart Detection</h3>
+          <p>Your camera tracks body movement in real-time</p>
+        </div>
+      </div>
+
+      <div class="exercise-preview">
+        <div class="exercise-card-home">
+          <div class="ex-icon">💪</div>
+          <div class="ex-info">
+            <span class="ex-name">Push-Ups</span>
+            <span class="ex-target">Target: <input type="number" id="pushup-target-input" class="target-input" value="15" min="1" max="999"> reps</span>
+          </div>
+          <div class="ex-badge">AI</div>
+        </div>
+      </div>
+
+      <div class="instructions">
+        <div class="step"><span class="step-num">1</span><span>Allow camera access</span></div>
+        <div class="step"><span class="step-num">2</span><span>Position yourself in push-up stance</span></div>
+        <div class="step"><span class="step-num">3</span><span>The AI counts your reps automatically</span></div>
+      </div>
+
+      <button id="btn-start" class="btn-primary" onclick="showScreen('workoutList')">
+        <span class="btn-icon">▶</span>
+        Start Workout
+      </button>
+
+      <p class="camera-note">📷 Camera access required for body tracking</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--              WORKOUT LIST SCREEN                    -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div id="screen-workout-list" class="screen">
+    <div class="list-container">
+      
+      <div class="list-header">
+        <button class="icon-btn" onclick="showScreen('home')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <h2>Day 1</h2>
+        <button class="icon-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+        </button>
+      </div>
+
+      <div class="list-stats">
+        <div class="stat-box">
+          <span class="stat-main">6 mins</span>
+          <span class="stat-sub">Duration</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-main">7</span>
+          <span class="stat-sub">Exercises</span>
+        </div>
+      </div>
+
+      <div class="exercises-header">
+        <h3>Exercises</h3>
+        <button class="btn-edit">Edit ></button>
+      </div>
+
+      <div class="exercises-list">
+        <div class="ex-list-item" onclick="startWorkout('mountain-climber')" style="cursor: pointer;">
+          <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+          <div class="ex-thumb">🏃</div>
+          <div class="ex-details">
+            <span class="ex-title">Mountain Climber</span>
+            <span class="ex-meta">00:30 (Target: 30)</span>
+          </div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+        </div>
+        <div class="ex-list-item" onclick="startWorkout('squats')" style="cursor: pointer;">
+          <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+          <div class="ex-thumb">🏋️</div>
+          <div class="ex-details">
+            <span class="ex-title">Squats</span>
+            <span class="ex-meta">x16</span>
+          </div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+        </div>
+        <div class="ex-list-item" onclick="startWorkout('high-stepping')" style="cursor: pointer;">
+          <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+          <div class="ex-thumb">🏃‍♂️</div>
+          <div class="ex-details">
+            <span class="ex-title">High Stepping</span>
+            <span class="ex-meta">00:30</span>
+          </div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+        </div>
+        <div class="ex-list-item" onclick="startWorkout('reverse-crunches')" style="cursor: pointer;">
+          <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+          <div class="ex-thumb">🤸</div>
+          <div class="ex-details">
+            <span class="ex-title">Reverse Crunches</span>
+            <span class="ex-meta">x16</span>
+          </div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+        </div>
+        <div class="ex-list-item" onclick="startWorkout('push-up')" style="cursor: pointer;">
+          <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+          <div class="ex-thumb">💪</div>
+          <div class="ex-details">
+            <span class="ex-title">Push-Ups</span>
+            <span class="ex-meta">x15</span>
+          </div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+        </div>
+        <div class="ex-list-item" onclick="startWorkout('plank')" style="cursor: pointer;">
+          <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+          <div class="ex-thumb">🧘</div>
+          <div class="ex-details">
+            <span class="ex-title">Plank</span>
+            <span class="ex-meta">00:30</span>
+          </div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+        </div>
+        <div class="ex-list-item" onclick="startWorkout('cobra-stretch')" style="cursor: pointer;">
+          <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+          <div class="ex-thumb">🐍</div>
+          <div class="ex-details">
+            <span class="ex-title">Cobra Stretch</span>
+            <span class="ex-meta">00:30</span>
+          </div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--              PERMISSION / LOADING SCREEN            -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div id="screen-permission" class="screen">
+    <div class="permission-content">
+      <div class="loader-ring"></div>
+      <h2 id="permission-title">Initializing AI...</h2>
+      <p id="permission-sub">Loading pose detection model</p>
+      <div class="loading-steps">
+        <div class="lstep" id="lstep-1">✓ Requesting camera access</div>
+        <div class="lstep" id="lstep-2">◌ Loading MediaPipe Pose model</div>
+        <div class="lstep" id="lstep-3">◌ Calibrating body detection</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--              WORKOUT CAMERA SCREEN                  -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div id="screen-workout" class="screen">
+
+    <!-- Video + Canvas overlay -->
+    <div class="camera-container">
+      <video id="workout-video" playsinline autoplay muted></video>
+      <canvas id="pose-canvas"></canvas>
+      
+      <!-- Positioning Guide Outline -->
+      <div id="position-guide" class="position-guide">
+        <div class="guide-corners top-left"></div>
+        <div class="guide-corners top-right"></div>
+        <div class="guide-corners bottom-left"></div>
+        <div class="guide-corners bottom-right"></div>
+        <div class="guide-text">Align full body inside</div>
+      </div>
+
+      <!-- Top HUD -->
+      <div class="hud-top">
+        <div class="hud-exercise-name">Push-Ups</div>
+        <button id="btn-stop" class="btn-stop" onclick="stopWorkout()">✕ Stop</button>
+      </div>
+
+      <!-- Progress bar (reps) -->
+      <div class="hud-progress-wrap">
+        <div class="hud-progress-bar">
+          <div id="hud-progress-fill" class="hud-progress-fill"></div>
+        </div>
+        <span id="hud-progress-label" class="hud-progress-label">0 / 15</span>
+      </div>
+
+      <!-- Bottom HUD overlay -->
+      <div class="hud-bottom">
+
+        <!-- Rep Counter Circle -->
+        <div class="rep-counter-wrap">
+          <svg class="rep-ring" viewBox="0 0 120 120">
+            <circle class="rep-ring-bg" cx="60" cy="60" r="52" />
+            <circle id="rep-ring-fill" class="rep-ring-fill" cx="60" cy="60" r="52" />
+          </svg>
+          <div class="rep-number" id="rep-count">0</div>
+        </div>
+
+        <!-- Status + Angle -->
+        <div class="hud-right">
+          <div class="status-badge" id="status-badge">GET READY</div>
+          <div class="angle-wrap">
+            <div class="angle-label">Elbow Angle</div>
+            <div class="angle-bar-wrap">
+              <div class="angle-bar-track">
+                <div id="angle-bar-fill" class="angle-bar-fill"></div>
+              </div>
+              <span id="angle-value" class="angle-value">--°</span>
+            </div>
+          </div>
+          <div class="form-tip" id="form-tip">Position yourself in front of camera</div>
+        </div>
+
+      </div>
+
+      <!-- Rep flash overlay -->
+      <div id="rep-flash" class="rep-flash">
+        <span id="rep-flash-text">REP!</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--              COMPLETION SCREEN                      -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div id="screen-complete" class="screen">
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+    <div class="complete-content">
+      <div class="complete-emoji">🏆</div>
+      <h2 class="complete-title">Workout<br/><span class="accent">Complete!</span></h2>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-reps">0</div>
+          <div class="stat-label">Reps Done</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-time">0s</div>
+          <div class="stat-label">Total Time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-cal">0</div>
+          <div class="stat-label">Cal Burned</div>
+        </div>
+      </div>
+
+      <div class="complete-message" id="complete-message">Amazing work! Keep pushing! 💪</div>
+
+      <div class="complete-buttons">
+        <button class="btn-primary" onclick="restartWorkout()">🔄 Do It Again</button>
+        <button class="btn-secondary" onclick="goHome()">🏠 Home</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="pose.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
