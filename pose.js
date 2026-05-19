@@ -708,7 +708,7 @@ window.initPose = async function(video, canvas) {
   });
 
   pose.setOptions({
-    modelComplexity:       2,
+    modelComplexity:       1,
     smoothLandmarks:       true,
     enableSegmentation:    false,
     smoothSegmentation:    false,
@@ -725,8 +725,8 @@ window.initPose = async function(video, canvas) {
     onFrame: async () => {
       await pose.send({ image: video });
     },
-    width:  1280,
-    height: 720,
+    width:  640,
+    height: 480,
   });
 
   isRunning = true;

@@ -67,8 +67,15 @@ class PoseService {
       bytesPerRow: image.planes[0].bytesPerRow,
     );
 
+    // Concatenate all planes to construct a complete image buffer (fixes Android tracking)
+    final WriteBuffer allBytes = WriteBuffer();
+    for (final Plane plane in image.planes) {
+      allBytes.putUint8List(plane.bytes);
+    }
+    final bytes = allBytes.done().buffer.asUint8List();
+
     return InputImage.fromBytes(
-      bytes: image.planes[0].bytes,
+      bytes: bytes,
       metadata: metadata,
     );
   }
