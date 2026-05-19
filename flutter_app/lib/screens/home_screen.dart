@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'workout_screen.dart';
+import 'workout_plan_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -81,6 +82,35 @@ class HomeScreen extends StatelessWidget {
                       .animate(delay: 300.ms)
                       .fadeIn(duration: 500.ms)
                       .slideX(begin: 0.2, end: 0),
+
+                  const SizedBox(height: 16),
+
+                  // My Plan button
+                  _PlanButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (_, a1, a2) => const WorkoutPlanScreen(),
+                          transitionsBuilder: (_, anim, __, child) {
+                            return SlideTransition(
+                              position: Tween<Offset>(
+                                begin: const Offset(0, 1),
+                                end: Offset.zero,
+                              ).animate(CurvedAnimation(
+                                parent: anim,
+                                curve: Curves.easeOutCubic,
+                              )),
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 400),
+                        ),
+                      );
+                    },
+                  )
+                      .animate(delay: 250.ms)
+                      .fadeIn(duration: 500.ms)
+                      .slideX(begin: -0.2, end: 0),
 
                   const SizedBox(height: 28),
 
@@ -396,6 +426,72 @@ class _StartButton extends StatelessWidget {
             SizedBox(width: 8),
             Text('Start Workout',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Plan button ───────────────────────────────────────────
+class _PlanButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  const _PlanButton({required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFF1A1A2E), Color(0xFF12121E)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: const Color(0xFF3742FA).withOpacity(0.25)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: const Color(0xFF3742FA).withOpacity(0.15),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              alignment: Alignment.center,
+              child: const Text('📋', style: TextStyle(fontSize: 24)),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('My Workout Plan',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      )),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Customize exercises & set your own targets',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white.withOpacity(0.4),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.white.withOpacity(0.25),
+              size: 16,
+            ),
           ],
         ),
       ),

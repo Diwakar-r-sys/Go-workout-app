@@ -104,66 +104,66 @@
       <div class="exercises-list">
         <div class="ex-list-item" onclick="startWorkout('mountain-climber')" style="cursor: pointer;">
           <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-          <div class="ex-thumb">🏃</div>
+          <div class="ex-thumb"><img src="mountain-climber.png" alt="Mountain Climber" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm);"></div>
           <div class="ex-details">
             <span class="ex-title">Mountain Climber</span>
-            <span class="ex-meta">00:30 (Target: 30)</span>
+            <span class="ex-meta"><input type="number" id="target-mountain-climber" class="target-input-inline" value="30" onclick="event.stopPropagation()"> <span style="color: var(--accent-orange); font-weight: 800; font-size: 14px;">s</span></span>
           </div>
-          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
         </div>
         <div class="ex-list-item" onclick="startWorkout('squats')" style="cursor: pointer;">
           <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-          <div class="ex-thumb">🏋️</div>
+          <div class="ex-thumb"><img src="squats.png" alt="Squats" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm);"></div>
           <div class="ex-details">
             <span class="ex-title">Squats</span>
-            <span class="ex-meta">x16</span>
+            <span class="ex-meta"><span style="color: var(--accent-orange); font-weight: 800; font-size: 14px;">x</span> <input type="number" id="target-squats" class="target-input-inline" value="16" onclick="event.stopPropagation()"></span>
           </div>
-          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
         </div>
         <div class="ex-list-item" onclick="startWorkout('high-stepping')" style="cursor: pointer;">
           <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-          <div class="ex-thumb">🏃‍♂️</div>
+          <div class="ex-thumb"><img src="high-stepping.png" alt="High Stepping" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm);"></div>
           <div class="ex-details">
             <span class="ex-title">High Stepping</span>
-            <span class="ex-meta">00:30</span>
+            <span class="ex-meta"><input type="number" id="target-high-stepping" class="target-input-inline" value="30" onclick="event.stopPropagation()"> <span style="color: var(--accent-orange); font-weight: 800; font-size: 14px;">s</span></span>
           </div>
-          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
         </div>
         <div class="ex-list-item" onclick="startWorkout('reverse-crunches')" style="cursor: pointer;">
           <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-          <div class="ex-thumb">🤸</div>
+          <div class="ex-thumb"><img src="reverse-crunches.png" alt="Reverse Crunches" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm);"></div>
           <div class="ex-details">
             <span class="ex-title">Reverse Crunches</span>
-            <span class="ex-meta">x16</span>
+            <span class="ex-meta"><span style="color: var(--accent-orange); font-weight: 800; font-size: 14px;">x</span> <input type="number" id="target-reverse-crunches" class="target-input-inline" value="16" onclick="event.stopPropagation()"></span>
           </div>
-          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
         </div>
         <div class="ex-list-item" onclick="startWorkout('push-up')" style="cursor: pointer;">
           <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-          <div class="ex-thumb">💪</div>
+          <div class="ex-thumb"><img src="push-ups.png" alt="Push-Ups" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm);"></div>
           <div class="ex-details">
             <span class="ex-title">Push-Ups</span>
-            <span class="ex-meta">x15</span>
+            <span class="ex-meta"><span style="color: var(--accent-orange); font-weight: 800; font-size: 14px;">x</span> <input type="number" id="target-push-up" class="target-input-inline" value="15" onclick="event.stopPropagation()"></span>
           </div>
-          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
         </div>
         <div class="ex-list-item" onclick="startWorkout('plank')" style="cursor: pointer;">
           <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-          <div class="ex-thumb">🧘</div>
+          <div class="ex-thumb"><img src="plank.png" alt="Plank" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm);"></div>
           <div class="ex-details">
             <span class="ex-title">Plank</span>
-            <span class="ex-meta">00:30</span>
+            <span class="ex-meta"><input type="number" id="target-plank" class="target-input-inline" value="30" onclick="event.stopPropagation()"> <span style="color: var(--accent-orange); font-weight: 800; font-size: 14px;">s</span></span>
           </div>
-          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
         </div>
         <div class="ex-list-item" onclick="startWorkout('cobra-stretch')" style="cursor: pointer;">
           <div class="drag-handle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
-          <div class="ex-thumb">🐍</div>
+          <div class="ex-thumb"><img src="cobra-stretch.png" alt="Cobra Stretch" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-sm);"></div>
           <div class="ex-details">
             <span class="ex-title">Cobra Stretch</span>
-            <span class="ex-meta">00:30</span>
+            <span class="ex-meta"><input type="number" id="target-cobra-stretch" class="target-input-inline" value="30" onclick="event.stopPropagation()"> <span style="color: var(--accent-orange); font-weight: 800; font-size: 14px;">s</span></span>
           </div>
-          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="14" x2="21" y2="3"></line><polyline points="8 21 3 21 3 16"></polyline><line x1="20" y1="10" x2="3" y2="21"></line></svg></div>
+          <div class="ex-action"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></div>
         </div>
       </div>
 

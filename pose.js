@@ -146,6 +146,29 @@ function processPushUp(landmarks) {
     }
   }
 
+  // ── Position Check: Horizontal Spine Rule ──
+  // Prevents standing hand waves by forcing the torso to be horizontal (side view)
+  let inPushupPosition = false;
+  if (leftOk && isVisible(lHip)) {
+    const dx = Math.abs(lHip.x - lShoulder.x);
+    const dy = Math.abs(lHip.y - lShoulder.y);
+    // When in a push-up form, the horizontal distance between shoulder and hip is larger
+    // When standing, the vertical distance is much larger
+    if (dx > dy * 0.5) inPushupPosition = true;
+  }
+  if (!inPushupPosition && rightOk && isVisible(rHip)) {
+    const dx = Math.abs(rHip.x - rShoulder.x);
+    const dy = Math.abs(rHip.y - rShoulder.y);
+    if (dx > dy * 0.5) inPushupPosition = true;
+  }
+
+  if (!inPushupPosition) {
+    window.poseState.formGood = false;
+    if (window.poseState.formFeedback === '' || window.poseState.formFeedback === 'Keep your back straight!') {
+      window.poseState.formFeedback = 'Get into push-up form (side view)!';
+    }
+  }
+
   // ── State Machine ──────────────────────────────
   const now = Date.now();
   const { phase } = window.poseState;
@@ -490,14 +513,16 @@ function drawSkeleton(landmarks, results) {
 
     // ── Dynamic colors based on form quality ────
     const good = window.poseState.formGood;
-    const lineColor   = good ? 'rgba(0, 255, 136, 0.5)' : 'rgba(255, 71, 87, 0.6)';
-    const dotStroke    = good ? 'rgba(0, 255, 136, 0.9)' : 'rgba(255, 71, 87, 0.95)';
-    const glowFill     = good ? 'rgba(0, 255, 136, 0.18)' : 'rgba(255, 71, 87, 0.22)';
-    const glowStroke   = good ? 'rgba(0, 255, 136, 0.8)' : 'rgba(255, 71, 87, 0.85)';
+    const lineColor   = good ? 'rgba(255, 255, 255, 1.0)' : 'rgba(255, 71, 87, 0.8)';
+    const dotStroke    = good ? 'rgba(255, 255, 255, 1.0)' : 'rgba(255, 71, 87, 1.0)';
+    const glowFill     = good ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 71, 87, 0.4)';
+    const glowStroke   = good ? 'rgba(255, 255, 255, 1.0)' : 'rgba(255, 71, 87, 1.0)';
 
     // ── Draw body-only connections ───────────────
+    canvasCtx.shadowColor = good ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 71, 87, 0.8)';
+    canvasCtx.shadowBlur = 10;
     canvasCtx.strokeStyle = lineColor;
-    canvasCtx.lineWidth = 5.0;
+    canvasCtx.lineWidth = 8.0;
     BODY_CONNECTIONS.forEach(([startIdx, endIdx]) => {
       const a = landmarks[startIdx];
       const b = landmarks[endIdx];
@@ -531,14 +556,14 @@ function drawSkeleton(landmarks, results) {
       if (!lm || lm.visibility < 0.3) return;
       const x = lm.x * canvasEl.width;
       const y = lm.y * canvasEl.height;
-      const r = bigJoints.includes(idx) ? 7 : 4;
+      const r = bigJoints.includes(idx) ? 10 : 6;
 
       canvasCtx.beginPath();
       canvasCtx.arc(x, y, r, 0, Math.PI * 2);
       canvasCtx.fillStyle = 'rgba(0, 0, 0, 0.6)';
       canvasCtx.fill();
       canvasCtx.strokeStyle = dotStroke;
-      canvasCtx.lineWidth = 1.5;
+      canvasCtx.lineWidth = 2.5;
       canvasCtx.stroke();
     });
 
@@ -559,11 +584,11 @@ function drawSkeleton(landmarks, results) {
       const x = lm.x * canvasEl.width;
       const y = lm.y * canvasEl.height;
       canvasCtx.beginPath();
-      canvasCtx.arc(x, y, 14, 0, Math.PI * 2);
+      canvasCtx.arc(x, y, 22, 0, Math.PI * 2);
       canvasCtx.fillStyle = glowFill;
       canvasCtx.fill();
       canvasCtx.strokeStyle = glowStroke;
-      canvasCtx.lineWidth = 2;
+      canvasCtx.lineWidth = 3;
       canvasCtx.stroke();
     });
 
@@ -618,12 +643,12 @@ function drawJointAngles(landmarks, joints, thresholdLow, thresholdHigh, inverse
     // Color based on phase
     let color = '#ffd32a';
     if (inverseLogic) {
-      // inverse: smaller angle = good (green)
-      color = angle < thresholdLow ? '#00ff88' : angle > thresholdHigh ? '#ff4757' : '#ffd32a';
+      // inverse: smaller angle = good (white)
+      color = angle < thresholdLow ? '#ffffff' : angle > thresholdHigh ? '#ff4757' : '#ffd32a';
     } else {
       // normal: smaller angle = bad (red) or bottom phase, bigger = good or top phase
-      // For simplicity, just use #00ff88 when outside bounds
-      color = angle < thresholdLow ? '#ff4757' : angle > thresholdHigh ? '#00ff88' : '#ffd32a';
+      // For simplicity, just use #ffffff when outside bounds
+      color = angle < thresholdLow ? '#ff4757' : angle > thresholdHigh ? '#ffffff' : '#ffd32a';
     }
 
     // Angle label

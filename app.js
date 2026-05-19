@@ -67,17 +67,33 @@ window.startWorkout = async function(exerciseId = 'push-up') {
     'cobra-stretch': 'Cobra Stretch'
   };
   
-  const pushupInput = document.getElementById('pushup-target-input');
-  const customPushupTarget = pushupInput ? parseInt(pushupInput.value) : 15;
+  const getTarget = (id, fallback) => {
+    // For push-ups, prioritize the home screen input if it's the active screen, 
+    // but the simplest is just checking the list screen inputs first, then fallback.
+    const listEl = document.getElementById(`target-${id}`);
+    if (listEl) {
+      const val = parseInt(listEl.value);
+      if (!isNaN(val) && val > 0) return val;
+    }
+    // Fallback for push-ups from home screen
+    if (id === 'push-up') {
+      const homeEl = document.getElementById('pushup-target-input');
+      if (homeEl) {
+        const hVal = parseInt(homeEl.value);
+        if (!isNaN(hVal) && hVal > 0) return hVal;
+      }
+    }
+    return fallback;
+  };
 
   const targets = {
-    'push-up': customPushupTarget > 0 ? customPushupTarget : 15,
-    'mountain-climber': 30,
-    'squats': 16,
-    'high-stepping': 30, // seconds
-    'reverse-crunches': 16,
-    'plank': 30, // seconds
-    'cobra-stretch': 30 // seconds
+    'push-up': getTarget('push-up', 15),
+    'mountain-climber': getTarget('mountain-climber', 30),
+    'squats': getTarget('squats', 16),
+    'high-stepping': getTarget('high-stepping', 30),
+    'reverse-crunches': getTarget('reverse-crunches', 16),
+    'plank': getTarget('plank', 30),
+    'cobra-stretch': getTarget('cobra-stretch', 30)
   };
 
   currentTarget = targets[exerciseId] || 15;
